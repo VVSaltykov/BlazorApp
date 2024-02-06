@@ -1,0 +1,43 @@
+﻿@page "/registration"
+@using BlazorApp.Definitions
+@using BlazorApp.Models
+
+<div class="container" style="height: 100vh;">
+    <div class="d-flex justify-content-center w-100 h-100">
+        <div class="frame align-self-center" style="width: 25rem;">
+            <div class="d-flex header mb-3">Регистрация</div>
+
+            <EditForm Model="@registrationModel" OnValidSubmit="@RegisterAsync">
+                @* <DataAnnotationsValidator /> *@
+                <div class="mb-3">
+                    <InputText placeholder="Логин" id="login" class="form-control" @bind-Value="registrationModel.Login" />
+                    <ValidationMessage For="@(() => registrationModel.Login)" />
+                </div>
+
+                <div class="mb-3">
+                    <InputText placeholder="Пароль" type="password" id="password" class="form-control" @bind-Value="registrationModel.Password" />
+                    <ValidationMessage For="@(() => registrationModel.Password)" />
+                </div>
+
+                <div class="mb-3">
+                    <InputText placeholder="E-mail" class="form-control" id="email" @bind-Value="registrationModel.Email" />
+                    <ValidationMessage For="@(() => registrationModel.Email)" />
+                </div>
+
+                <div class="mb-3">
+                    <InputSelect class="form-control" @bind-Value="registrationModel.Role">
+                        @foreach (Role role in Enum.GetValues(typeof(Role)))
+                        {
+                            <option value="@role">@role.ToString()</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => registrationModel.Role)" />
+                </div>
+
+                <div class="d-flex justify-content-center w-100 h-100">
+                    <button type="submit" class="btn btn-primary login-button">Зарегистрироваться</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
