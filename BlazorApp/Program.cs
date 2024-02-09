@@ -26,7 +26,8 @@ namespace BlazorApp
 
             builder.Services.AddSingleton<WeatherForecastService>();
 
-            builder.Services.AddTransient<UserRepository>();
+            builder.Services.AddTransient<UserRepository>()
+                            .AddTransient<CompetitonRepository>();
 
 
 

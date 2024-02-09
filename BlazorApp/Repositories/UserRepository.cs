@@ -34,5 +34,15 @@ namespace BlazorApp.Repositories
             }
             return user;
         }
+        public async Task<bool> CheckUserAsync(RegistrationModel registrationModel)
+        {
+            bool check = true;
+            if (applicationContext.Users.Where(u => u.Login == registrationModel.Login).Any())
+            {
+                check = false;
+                return check;
+            }
+            return check;
+        }
     }
 }

@@ -9,13 +9,16 @@ namespace BlazorApp.Pages
     public partial class Login : ComponentBase
     {
         [Inject]
+        protected NavigationManager NavigationManager { get; set; }
+
+        [Inject]
         protected IJSRuntime JSRuntime { get; set; }
 
         [Inject]
-        protected IHttpContextAccessor HttpContextAccessor { get; set; }
+        protected UserRepository UserRepository { get; set; }
 
         [Inject]
-        protected UserRepository UserRepository { get; set; }
+        protected CookieService CookieService { get; set; }
 
         protected LoginModel loginModel { get; set; } = new LoginModel();
         protected bool IsLoginFailed { get; set; } = false;
@@ -25,8 +28,13 @@ namespace BlazorApp.Pages
             var user = await UserRepository.GetUserAsync(loginModel);
             if (user != null)
             {
-                var cookieService = new CookieService(HttpContextAccessor, JSRuntime);
-                await cookieService.SetUserCookie(user);
+                await CookieService.SetUserCookie(user);
+
+                NavigationManager.NavigateTo("/home");
+            }
+            else
+            {
+                IsLoginFailed = true;
             }
         }
     }

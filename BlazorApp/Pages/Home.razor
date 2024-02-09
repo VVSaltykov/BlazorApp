@@ -1,0 +1,23 @@
+﻿@page "/home"
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Date and Time</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var competition in Competitions)
+        {
+            <tr>
+                <td>@competition.Name</td>
+                <td>@competition.DateTime.ToString("yyyy-MM-dd HH:mm")</td>
+                <td><button class="btn btn-primary">Создать соревнование</button></td>
+                <td><button class="btn btn-info">Подробнее о соревновании</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
