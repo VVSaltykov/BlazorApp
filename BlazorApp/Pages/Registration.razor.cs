@@ -10,16 +10,26 @@ namespace BlazorApp.Pages
         protected NavigationManager NavigationManager { get; set; }
 
         [Inject]
-        protected UserRepository userRepository { get; set; }
+
+        protected SchoolRepository SchoolRepository { get; set; }
+
+        [Inject]
+        protected UserRepository UserRepository { get; set; }
 
         protected RegistrationModel registrationModel { get; set; } = new RegistrationModel();
         private bool IsRegistered { get; set; } = false;
+        private List<School> Schools = new List<School>();
+
+        protected override async Task OnInitializedAsync()
+        {
+            Schools = await SchoolRepository.GetSchoolsAsync();
+        }
 
         protected async Task RegisterAsync()
         {
-            if (await userRepository.CheckUserAsync(registrationModel))
+            if (await UserRepository.CheckUserAsync(registrationModel))
             {
-                await userRepository.AddUserAsync(registrationModel);
+                await UserRepository.AddUserAsync(registrationModel);
 
                 NavigationManager.NavigateTo("/login");
             }

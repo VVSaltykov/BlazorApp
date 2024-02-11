@@ -44,5 +44,10 @@ namespace BlazorApp.Repositories
             }
             return check;
         }
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            var user = await applicationContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            return user;
+        }
     }
 }
